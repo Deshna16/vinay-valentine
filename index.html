@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Vinay 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at bottom, #020111, #000);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* 🌌 VERY DENSE STARFIELD */
+.starfield, .starfield2, .starfield3 {
+  position: fixed;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  animation: starsMove linear infinite;
+}
+
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 10% 10%, white, transparent),
+    radial-gradient(1px 1px at 20% 80%, white, transparent),
+    radial-gradient(1px 1px at 30% 30%, white, transparent),
+    radial-gradient(1px 1px at 40% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 60% 20%, white, transparent),
+    radial-gradient(1px 1px at 70% 90%, white, transparent),
+    radial-gradient(1px 1px at 80% 40%, white, transparent),
+    radial-gradient(1px 1px at 90% 60%, white, transparent);
+  animation-duration: 120s;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.starfield2 {
+  background-image:
+    radial-gradient(2px 2px at 15% 25%, #fff, transparent),
+    radial-gradient(2px 2px at 35% 75%, #fff, transparent),
+    radial-gradient(2px 2px at 65% 45%, #fff, transparent),
+    radial-gradient(2px 2px at 85% 15%, #fff, transparent);
+  animation-duration: 200s;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.starfield3 {
+  background-image:
+    radial-gradient(3px 3px at 25% 55%, #fff, transparent),
+    radial-gradient(3px 3px at 55% 25%, #fff, transparent),
+    radial-gradient(3px 3px at 75% 75%, #fff, transparent);
+  animation-duration: 300s;
+  opacity: 0.4;
+  z-index: 3;
+}
+
+@keyframes starsMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1200px); }
+}
+
+/* 💎 CARD */
+.container {
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 26px;
+  text-align: center;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 50px rgba(255,255,255,0.25);
+}
+
+/* 🖼️ IMAGE FIX */
+img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin-bottom: 16px;
+}
+
+.question {
+  font-size: 1.15rem;
+  margin-bottom: 26px;
+  line-height: 1.5;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.yes {
+  background: linear-gradient(135deg, #ff5fa2, #ff8fcf);
+  color: white;
+}
+
+.no {
+  background: rgba(255,255,255,0.25);
+  color: white;
+  position: relative;
+}
+
+.share {
+  background: rgba(255,255,255,0.18);
+  color: white;
+  margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="starfield"></div>
+<div class="starfield2"></div>
+<div class="starfield3"></div>
+
+<div class="container" id="card">
+  <img id="img" src="">
+  <div class="question" id="question"></div>
+
+  <div class="buttons">
+    <button class="yes" onclick="yesClick()">Yes 💖</button>
+    <button class="no" id="noBtn" onclick="noClick()">No 😅</button>
+  </div>
+</div>
+
+<audio id="music" src="music/song.mp3"></audio>
+
+<script>
+const questions = [
+  {
+    text: "Would you choose me even on days I’m annoying? 😌",
+    img: "images/img1.jpg",
+    sad: "Aww 🥺 thoda soch lo na…"
+  },
+  {
+    text: "Do you enjoy my attention a bit more than you admit? 😌",
+    img: "images/img2.jpg",
+    sad: "Sach bolna mushkil hota hai 😔"
+  },
+  {
+    text: "Would you choose me even when things get complicated? 🤍",
+    img: "images/img3.jpg",
+    sad: "Complicated bhi cute hota hai 🥺"
+  },
+  {
+    text: "Vinay… will you hold my heart gently, today and forever? 🌙❤️",
+    img: "images/img4.jpg",
+    final: true
+  }
+];
+
+let index = 0;
+
+const q = document.getElementById("question");
+const img = document.getElementById("img");
+const noBtn = document.getElementById("noBtn");
+const music = document.getElementById("music");
+
+function loadQuestion() {
+  const current = questions[index];
+  q.innerText = current.text;
+  img.src = current.img;
+
+  if (current.final) {
+    noBtn.onclick = null;
+    noBtn.onmouseenter = moveNo;
+  } else {
+    noBtn.onclick = noClick;
+    noBtn.onmouseenter = null;
+    noBtn.style.transform = "translate(0,0)";
+  }
+}
+
+function yesClick() {
+  if (questions[index].final) {
+    music.play();
+    document.getElementById("card").innerHTML = `
+      <h2>💖 I love you forever and ever and ever 💖</h2>
+      <p style="margin-top:12px;font-size:1.1rem;opacity:0.9;">
+        This is us. Always. ♾️
+      </p>
+      <button class="share" onclick="shareLove()">Share 💌</button>
+    `;
+    return;
+  }
+  index++;
+  loadQuestion();
+}
+
+function noClick() {
+  q.innerText = questions[index].sad;
+  setTimeout(loadQuestion, 1200);
+}
+
+function moveNo() {
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 140 - 70;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+/* 📤 SHARE FUNCTION */
+function shareLove() {
+  const text = "This is us. Always. ♾️💖";
+  if (navigator.share) {
+    navigator.share({
+      title: "For Vinay 💖",
+      text: text,
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(text + " " + window.location.href);
+    alert("Link copied 💌");
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
